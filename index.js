@@ -138,6 +138,18 @@ document.addEventListener("keypress", (ev) => {
   }
 });
 
+icon.addEventListener("mousedown", (ev) => {
+  game.running = !game.running;
+
+  if (game.running) {
+    icon.innerHTML = "pause";
+    generation = 0;
+    gen.innerHTML = 0;
+  } else {
+    icon.innerHTML = "play_arrow";
+  }
+});
+
 canvas.addEventListener("mousedown", (ev) => {
   if (!game.running) {
     let rect = canvas.getBoundingClientRect();
