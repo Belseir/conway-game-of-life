@@ -18,9 +18,13 @@ const STYLES = {
   BORDER_WIDTH: "2",
 };
 
+const gen = document.getElementById("generation");
+const pop = document.getElementById("population");
 const icon = document.getElementsByClassName("material-icons")[0];
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
+let generation = 0,
+  population = 0;
 
 class Cell {
   constructor(_x, _y) {
@@ -63,9 +67,15 @@ class Cell {
       }
     }
 
-    if (neighbours < 2) this.alive = false;
-    if (neighbours > 3) this.alive = false;
-    if (!this.alive && neighbours === 3) this.alive = true;
+    if ((neighbours < 2 || neighbours > 3) && this.alive) {
+      this.alive = false;
+      population--;
+    }
+
+    if (!this.alive && neighbours === 3) {
+      this.alive = true;
+      population++;
+    }
   }
 }
 
@@ -78,6 +88,10 @@ class Game {
   }
 
   next() {
+    generation++;
+    gen.innerHTML = generation;
+    pop.innerHTML = population;
+
     let oldState = structuredClone(this.table);
 
     for (let row of this.table) {
@@ -116,6 +130,8 @@ document.addEventListener("keypress", (ev) => {
 
     if (game.running) {
       icon.innerHTML = "pause";
+      generation = 0;
+      gen.innerHTML = 0;
     } else {
       icon.innerHTML = "play_arrow";
     }
@@ -129,6 +145,12 @@ canvas.addEventListener("mousedown", (ev) => {
     let y = Math.floor((ev.clientY - rect.top) / CELL_SIZE);
 
     game.table[y][x].alive = !game.table[y][x].alive;
+
+    if (game.table[y][x].alive) population++;
+    else population--;
+
+    pop.innerHTML = population;
+
     game.draw();
   }
 });

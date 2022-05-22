@@ -38,6 +38,11 @@
     .help {
         color: #b9b9b9;
     }
+
+    .info {
+        margin-left: 32px;
+        margin-bottom: 16px;
+    }
 </style>
 
 <body>
@@ -45,6 +50,11 @@
         <h1>Conway's Game Of Life</h1>
         <canvas id="canvas" height="320" width="320"></canvas>
         <i class="material-icons">play_arrow</i>
+
+        <div class="info">
+            <p>Generation: <span id="generation">0</span></p>
+            <p>Population: <span id="population">0</span></p>
+        </div>
 
         <div>
             <p>Made by: <a href="https://github.com/FutrykFabricio">Futryk Fabricio</a></p>
